@@ -1,4 +1,4 @@
-ARG ROS_DISTRO=rolling
+ARG ROS_DISTRO=humble
 FROM ros:$ROS_DISTRO-ros-base as ci
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -134,6 +134,8 @@ RUN sudo apt-get -q update \
 # (on the FCU) will be used.
 WORKDIR /home/$USERNAME
 RUN git clone https://github.com/ArduPilot/ardupilot.git --recurse-submodules
+RUN git clone https://github.com/ArduPilot/SITL_Models.git
+RUN . ~/.profile
 
 # Install ArduSub dependencies
 WORKDIR /home/$USERNAME/ardupilot
@@ -176,6 +178,15 @@ RUN . "/opt/ros/${ROS_DISTRO}/setup.sh" \
 
 # Setup the simulation environment variables
 RUN echo "source ${USER_WORKSPACE}/src/blue/.docker/entrypoints/sim.sh" >> /home/$USERNAME/.bashrc
+
+RUN export GZ_SIM_SYSTEM_PLUGIN_PATH=/home/$USERNAME/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLUGIN_PATH
+RUN export GZ_SIM_RESOURCE_PATH=/home/$USERNAME/ardupilot_gazebo/models:/home/$USERNAME/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+
+
+RUN echo "export GZ_VERSION=garden" >> ~/.bashrc
+RUN echo "export GZ_SIM_SYSTEM_PLUGIN_PATH=/home/$USERNAME/ardupilot_gazebo/build:${GZ_SIM_SYSTEM_PLUGIN_PATH}" >> ~/.bashrc
+RUN echo "export GZ_SIM_RESOURCE_PATH=/home/$USERNAME/ardupilot_gazebo/models:/home/$USERNAME/ardupilot_gazebo/worlds:/home/$USERNAME/SITL_Models/Gazebo/models:/home/$USERNAME/SITL_Models/Gazebo/worlds:$GZ_SIM_RESOURCE_PATH" >> ~/.bashrc
+
 
 FROM desktop as desktop-nvidia
 
