@@ -204,6 +204,8 @@ RUN sudo apt-get update \
     && sudo apt-get clean -y \
     && sudo rm -rf /var/lib/apt/lists/*
 
+RUN apt install ros-humble-mavros*
+
 # Env vars for the nvidia-container-runtime.
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
