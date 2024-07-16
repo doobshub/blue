@@ -12,6 +12,8 @@ export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLU
 # Add ardupilot_gazebo models and worlds
 export GZ_SIM_RESOURCE_PATH=$HOME/ardupilot_gazebo/models:$HOME/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
 
+export GZ_SIM_RESOURCE_PATH=$HOME/ardupilot_gazebo/models:$HOME/ardupilot_gazebo/worlds:$HOME/SITL_Models/Gazebo/models:$HOME/SITL_Models/Gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+
 # Add blue models and worlds
 export GZ_SIM_RESOURCE_PATH=$HOME/ws_blue/src/blue/blue_description/gazebo/models:$HOME/ws_blue/src/blue/blue_description/gazebo/worlds:$GZ_SIM_RESOURCE_PATH
 
